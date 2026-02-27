@@ -15,18 +15,16 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-mlflow.set_experiment("Loan_Status_Experiment")
+# AKTIFKAN AUTOLOG SAJA (tanpa set_experiment & start_run)
 mlflow.sklearn.autolog()
 
-with mlflow.start_run(nested=True):
-    model = LogisticRegression(max_iter=1000)
-    model.fit(X_train, y_train)
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
 
-    y_pred = model.predict(X_test)
-    acc = accuracy_score(y_test, y_pred)
+y_pred = model.predict(X_test)
+acc = accuracy_score(y_test, y_pred)
 
-    print("Accuracy:", acc)
-    mlflow.log_metric("manual_accuracy", acc)
-
+print("Accuracy:", acc)
+mlflow.log_metric("manual_accuracy", acc)
 
 print("Selesai dan tercatat di MLflow.")
