@@ -18,7 +18,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 mlflow.set_experiment("Loan_Status_Experiment")
 mlflow.sklearn.autolog()
 
-with mlflow.start_run():
+with mlflow.start_run(nested=True):
     model = LogisticRegression(max_iter=1000)
     model.fit(X_train, y_train)
 
@@ -27,5 +27,6 @@ with mlflow.start_run():
 
     print("Accuracy:", acc)
     mlflow.log_metric("manual_accuracy", acc)
+
 
 print("Selesai dan tercatat di MLflow.")
